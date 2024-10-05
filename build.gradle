@@ -18,21 +18,31 @@ repositories {
 }
 
 dependencies {
+
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	// implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'io.projectreactor:reactor-core'
 
-	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // Pour la sérialisation JSON
+
+
+	// implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	// implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	
 	// implementation 'org.postgresql:postgresql:42.6.0'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 }
 
 tasks.named('test') {
@@ -40,5 +50,5 @@ tasks.named('test') {
 }
 
 springBoot {
-    mainClass = 'fr.app.lorcanaDex.LorcanaDexApplication' // Remplace par le nom de ta classe principale
+    mainClass = 'fr.app.lorcanaDex.LorcanaDexApplication'
 }
