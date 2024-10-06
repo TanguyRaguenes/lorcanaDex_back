@@ -1,26 +1,29 @@
-package fr.app.lorcanaDex.dto;
+package fr.app.lorcanaDex.security;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 
-import java.security.Key;
 import java.util.Date;
+
+import javax.crypto.SecretKey;
 
 @Component
 public class JwtUtil {
 
-    private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256); //
-    // Génération de clé sécurisée
+    @Value("${jwt.secret}")
+    private String secretKeyString;
+    private SecretKey secretKey;
 
-    // private final String secretKeyString =
-    // "your-very-secure-and-long-secret-key-32-chars";
-    // private final Key secretKey =
-    // Keys.hmacShaKeyFor(secretKeyString.getBytes(StandardCharsets.UTF_8));
+    @PostConstruct
+    public void init() {
+        this.secretKey = Keys.hmacShaKeyFor(secretKeyString.getBytes(StandardCharsets.UTF_8));
+    }
 
     public String generateToken(String username) {
         return Jwts.builder()
@@ -30,11 +33,6 @@ public class JwtUtil {
                 .signWith(secretKey)
                 .compact();
     }
-
-    // public Boolean validateToken(String token, String username) {
-    // final String extractedUsername = extractUsername(token);
-    // return (extractedUsername.equals(username) && !isTokenExpired(token));
-    // }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String extractedUsername = extractUsername(token);

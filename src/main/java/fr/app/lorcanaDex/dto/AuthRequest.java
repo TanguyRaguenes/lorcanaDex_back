@@ -7,6 +7,7 @@ public class AuthRequest {
 
     // Constructeurs
     public AuthRequest() {
+        super();
     }
 
     public AuthRequest(String username, String password) {

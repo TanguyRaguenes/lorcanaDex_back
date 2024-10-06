@@ -53,14 +53,6 @@ public class CardsController {
 
         List<Card> cardsList = cardsFlux.collectList().block();
 
-        System.out.println("--------------------------------------");
-
-        cardsList.forEach(card -> {
-            System.out.println(card);
-        });
-
-        System.out.println("--------------------------------------");
-
         return cardsList;
     }
 
