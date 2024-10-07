@@ -14,7 +14,6 @@ import fr.app.lorcanaDex.bo.Card;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @Controller
 public class CardsController {
 
@@ -26,7 +25,6 @@ public class CardsController {
 
     WebClient.Builder builder = WebClient.builder();
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/api/cards/{pageNumber}")
     @ResponseBody
     public List<Card> getCards(@PathVariable(name = "pageNumber", required = false) Long pageNumber) {
@@ -56,7 +54,6 @@ public class CardsController {
         return cardsList;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/bulk-data")
     public String bulkData() {
 
@@ -81,7 +78,6 @@ public class CardsController {
         return ("/cards-list");
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/get-cards/{filterKey}/{filterValue}")
     @ResponseBody
     public <T> List<Card> getCards(@PathVariable(name = "filterKey", required = false) String filterKey,
