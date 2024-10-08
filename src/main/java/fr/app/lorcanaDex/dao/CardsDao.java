@@ -82,19 +82,12 @@ public class CardsDao implements ICardsDao {
     }
 
     @Override
-    public <T> List<Card> getCards(String filterKey, T filterValue) {
+    public List<Card> getCards() {
 
         List<Card> cards = null;
 
-        if (filterKey != null) {
-
-            cards = jdbcTemplate.query("SELECT * FROM cards WHERE " + filterKey + "=?",
-                    new BeanPropertyRowMapper<Card>(Card.class), filterValue);
-
-        } else {
-            cards = jdbcTemplate.query("SELECT * FROM cards", new BeanPropertyRowMapper<Card>(Card.class));
-        }
-
+        cards = jdbcTemplate.query("SELECT * FROM cards", new BeanPropertyRowMapper<Card>(Card.class));
+      
         return cards;
     }
 

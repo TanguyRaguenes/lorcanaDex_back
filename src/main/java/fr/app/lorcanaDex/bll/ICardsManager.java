@@ -8,6 +8,6 @@ public interface ICardsManager {
 
     public abstract void bulkData(List<Card> cards);
 
-    public abstract <T> List<Card> getCards(String filterKey, T filterValue);
+    public abstract List<Card> getCards();
 
 }

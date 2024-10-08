@@ -22,8 +22,8 @@ public class CardsManager implements ICardsManager {
     }
 
     @Override
-    public <T> List<Card> getCards(String filterKey, T filterValue) {
-        return cardsDao.getCards(filterKey, filterValue);
+    public List<Card> getCards() {
+        return cardsDao.getCards();
     }
 
 }

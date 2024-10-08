@@ -78,12 +78,20 @@ public class CardsController {
         return ("/cards-list");
     }
 
-    @GetMapping("/get-cards/{filterKey}/{filterValue}")
-    @ResponseBody
-    public <T> List<Card> getCards(@PathVariable(name = "filterKey", required = false) String filterKey,
-            @PathVariable(name = "filterValue", required = false) T filterValue) {
+    // @GetMapping("/get-cards/{filterKey}/{filterValue}")
+    // @ResponseBody
+    // public <T> List<Card> getCards(@PathVariable(name = "filterKey", required = false) String filterKey,@PathVariable(name = "filterValue", required = false) T filterValue) {
 
-        return cardsManager.getCards(filterKey, filterValue);
+    //     return cardsManager.getCards(filterKey, filterValue);
+
+    // }
+
+
+    @GetMapping("/get-cards")
+    @ResponseBody
+    public <T> List<Card> getCards() {
+
+        return cardsManager.getCards();
 
     }
 

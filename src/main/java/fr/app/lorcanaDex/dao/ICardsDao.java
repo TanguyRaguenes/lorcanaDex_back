@@ -9,5 +9,5 @@ public interface ICardsDao {
 
     public abstract Card getCardById(String uniqueId);
 
-    public abstract <T> List<Card> getCards(String filterKey, T filterValue);
+    public abstract List<Card> getCards();
 }
