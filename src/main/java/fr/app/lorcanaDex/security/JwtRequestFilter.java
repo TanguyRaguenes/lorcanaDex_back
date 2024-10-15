@@ -1,5 +1,6 @@
 package fr.app.lorcanaDex.security;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import java.time.LocalDateTime;
 
 import java.io.IOException;
 import jakarta.servlet.FilterChain;
@@ -20,25 +22,26 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
     private UserDetailsService userDetailsService;
 
-    public JwtRequestFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService){
-        this.jwtUtil=jwtUtil;
-        this.userDetailsService=userDetailsService;
+    public JwtRequestFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
+        this.jwtUtil = jwtUtil;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-                
-        final String authorizationHeader = request.getHeader("Authorization");
 
-
-        System.out.println("Authorization Header: " + authorizationHeader);
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println("Header reçu à : " + LocalDateTime.now());
+        System.out.println("Authorization: " + request.getHeader("Authorization"));
+        System.out.println("x-function-name : " + request.getHeader("x-function-name"));
+        System.out.println("------------------------------------------------------------------------");
 
         String username = null;
         String jwt = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
+        if (request.getHeader("Authorization") != null && request.getHeader("Authorization").startsWith("Bearer ")) {
+            jwt = request.getHeader("Authorization").substring(7);
             username = jwtUtil.extractUsername(jwt);
         }
 

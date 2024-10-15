@@ -29,6 +29,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authRequest) {
 
         try {

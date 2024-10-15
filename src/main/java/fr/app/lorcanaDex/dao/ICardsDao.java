@@ -6,8 +6,6 @@ import fr.app.lorcanaDex.bo.Card;
 
 public interface ICardsDao {
     public abstract void bulkData(List<Card> cards);
-
     public abstract Card getCardById(String uniqueId);
-
     public abstract List<Card> getCards();
 }

@@ -25,7 +25,7 @@ public class CardsDao implements ICardsDao {
     public void bulkData(List<Card> cards) {
 
         System.out.println("//////////////////////////////////////////////");
-        System.out.println("nb cartes : " + cards.size());
+        System.out.println("nb cartes récupérées : " + cards.size());
         System.out.println("//////////////////////////////////////////////");
 
         if (cards != null) {
@@ -34,7 +34,7 @@ public class CardsDao implements ICardsDao {
                 if (getCardById(card.getUniqueId()) != null) {
                     // System.out.println("La carte est déjà dans la BDD");
                 } else {
-                    System.out.println("Il faut ajouter la carte à la BDD");
+                    // System.out.println("Il faut ajouter la carte à la BDD");
 
                     String sql = "INSERT INTO cards(artist,lorcanaSetName,classifications,dateAdded,setNum,color,gamemode,franchise,image,cost,inkable,"
                             + "name,type,lore,rarity,flavorText,uniqueId,cardNum,bodyText,willpower,cardVariants,dateModified,strength,setId)"
@@ -87,7 +87,7 @@ public class CardsDao implements ICardsDao {
         List<Card> cards = null;
 
         cards = jdbcTemplate.query("SELECT * FROM cards", new BeanPropertyRowMapper<Card>(Card.class));
-      
+
         return cards;
     }
 
