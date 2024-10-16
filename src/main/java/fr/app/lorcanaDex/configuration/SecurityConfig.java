@@ -31,7 +31,8 @@ public class SecurityConfig {
 
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/login").permitAll()
-                .requestMatchers("/bulk-data").authenticated()
+                // .requestMatchers("/get-cards").authenticated()
+                // .requestMatchers("/bulk-data").authenticated()
                 .anyRequest().authenticated()
 
         );
