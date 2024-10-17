@@ -51,6 +51,8 @@ public class Card {
     private String franchise;
     @JsonProperty("Image")
     private String image;
+    @JsonProperty("ImageSmall")
+    private String imageSmall;
     @JsonProperty("Cost")
     private Long cost;
     @JsonProperty("Inkable")
@@ -88,7 +90,8 @@ public class Card {
 
     public Card(String artist, String lorcanaSetName, String classifications, String dateAdded, Long setNum,
             String color,
-            String gamemode, String franchise, String image, Long cost, boolean inkable, String name, String type,
+            String gamemode, String franchise, String image, String imageSmall, Long cost, boolean inkable, String name,
+            String type,
             Long lore, String rarity, String flavorText, String uniqueId, Long cardNum, String bodyText, Long willpower,
             String cardVariants, String dateModified, Long strength, String setId) {
         this.artist = artist;
@@ -100,6 +103,7 @@ public class Card {
         this.gamemode = gamemode;
         this.franchise = franchise;
         this.image = image;
+        this.imageSmall = imageSmall;
         this.cost = cost;
         this.inkable = inkable;
         this.name = name;
@@ -187,6 +191,14 @@ public class Card {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getImageSmall() {
+        return imageSmall;
+    }
+
+    public void setImageSmall(String imageSmall) {
+        this.imageSmall = imageSmall;
     }
 
     public Long getCost() {

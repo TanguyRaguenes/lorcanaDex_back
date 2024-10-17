@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +23,12 @@ import fr.app.lorcanaDex.security.JwtRequestFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    // private JwtRequestFilter jwtRequestFilter;
+
+    // public SecurityConfig(JwtRequestFilter jwtRequestFilter) {
+    // this.jwtRequestFilter = jwtRequestFilter;
+    // }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtRequestFilter jwtRequestFilter)
             throws Exception {
@@ -31,14 +38,16 @@ public class SecurityConfig {
 
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/login").permitAll()
-                .requestMatchers("/bulk-data").authenticated()
+                // .requestMatchers("/bulk-data").permitAll()
+                // .requestMatchers("/get-cards").permitAll()
                 .anyRequest().authenticated()
 
         );
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtRequestFilter,
+                UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

@@ -22,7 +22,7 @@ public class CardsController {
     WebClient.Builder builder = WebClient.builder();
 
     @GetMapping("/bulk-data")
-    @CrossOrigin(origins = "http://localhost:4200")
+    // @CrossOrigin(origins = "http://localhost:4200")
     public Mono<String> bulkData() {
 
         String url = "https://api.lorcana-api.com/bulk/cards";
@@ -49,7 +49,7 @@ public class CardsController {
     }
 
     @GetMapping("/get-cards")
-    @CrossOrigin(origins = "http://localhost:4200")
+    // @CrossOrigin(origins = "http://localhost:4200")
     public List<Card> getCards() {
 
         return cardsManager.getCards();
