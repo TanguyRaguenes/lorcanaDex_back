@@ -25,11 +25,7 @@ public class CardsController {
 
     @GetMapping("/bulk-data")
     // @CrossOrigin(origins = "http://localhost:4200")
-<<<<<<< HEAD
-    public Mono<String> bulkData() {
-=======
     public Mono<Map<String, String>> bulkData() {
->>>>>>> c606bf0ebdb6d976d5820f6e80ff46be39b1fd2e
 
         String url = "https://api.lorcana-api.com/bulk/cards";
 
