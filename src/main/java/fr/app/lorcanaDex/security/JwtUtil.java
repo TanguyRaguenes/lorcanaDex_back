@@ -29,7 +29,11 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
+<<<<<<< HEAD
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+=======
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 5)) // Token valide 30 minutes
+>>>>>>> c606bf0ebdb6d976d5820f6e80ff46be39b1fd2e
                 .signWith(secretKey)
                 .compact();
     }

@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import fr.app.lorcanaDex.bll.ICardsManager;
 import fr.app.lorcanaDex.bo.Card;
@@ -23,7 +25,11 @@ public class CardsController {
 
     @GetMapping("/bulk-data")
     // @CrossOrigin(origins = "http://localhost:4200")
+<<<<<<< HEAD
     public Mono<String> bulkData() {
+=======
+    public Mono<Map<String, String>> bulkData() {
+>>>>>>> c606bf0ebdb6d976d5820f6e80ff46be39b1fd2e
 
         String url = "https://api.lorcana-api.com/bulk/cards";
 
@@ -41,10 +47,14 @@ public class CardsController {
                 .collectList()
                 .flatMap(cardsList -> {
                     cardsManager.bulkData(cardsList);
-                    return Mono.just("bulkData done");
+                    Map<String, String> response = new HashMap<>();
+                    response.put("message", "bulkData done");
+                    return Mono.just(response);
                 })
                 .onErrorResume(e -> {
-                    return Mono.just("Failed to process bulk data: " + e.getMessage());
+                    Map<String, String> response = new HashMap<>();
+                    response.put("message", "Failed to process bulk data: " + e.getMessage());
+                    return Mono.just(response);
                 });
     }
 

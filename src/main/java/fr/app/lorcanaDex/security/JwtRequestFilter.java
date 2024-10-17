@@ -32,19 +32,26 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         System.out.println("------------------------------------------------------------------------");
+
         System.out.println("Header reçu à : " + LocalDateTime.now());
         System.out.println("Authorization: " + request.getHeader("Authorization"));
+<<<<<<< HEAD
         System.out.println("------------------------------------------------------------------------");
+=======
+>>>>>>> c606bf0ebdb6d976d5820f6e80ff46be39b1fd2e
 
         String username = null;
         String jwt = null;
 
         if (request.getHeader("Authorization") != null && request.getHeader("Authorization").startsWith("Bearer ")) {
             jwt = request.getHeader("Authorization").substring(7);
+            System.out.println("jwt : " + jwt);
             username = jwtUtil.extractUsername(jwt);
+            System.out.println("username : " + username);
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
             if (jwtUtil.validateToken(jwt, userDetails)) {
@@ -56,6 +63,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         chain.doFilter(request, response);
+
+        System.out.println("------------------------------------------------------------------------");
 
     }
 }
