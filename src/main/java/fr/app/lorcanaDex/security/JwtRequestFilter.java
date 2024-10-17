@@ -35,10 +35,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         System.out.println("Header reçu à : " + LocalDateTime.now());
         System.out.println("Authorization: " + request.getHeader("Authorization"));
-<<<<<<< HEAD
         System.out.println("------------------------------------------------------------------------");
-=======
->>>>>>> c606bf0ebdb6d976d5820f6e80ff46be39b1fd2e
 
         String username = null;
         String jwt = null;
