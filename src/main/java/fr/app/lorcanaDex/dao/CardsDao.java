@@ -7,11 +7,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import fr.app.lorcanaDex.bo.Card;
 import fr.app.lorcanaDex.service.CloudinaryService;
 
-@Component
+@Repository
 public class CardsDao implements ICardsDao {
 
     private JdbcTemplate jdbcTemplate;
@@ -91,9 +92,10 @@ public class CardsDao implements ICardsDao {
 
             });
 
-            System.out.println("Fin du bulk !!!");
-            System.out.println("//////////////////////////////////////////////");
         }
+
+        System.out.println("Fin du bulk !!!");
+        System.out.println("//////////////////////////////////////////////");
 
     }
 

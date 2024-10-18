@@ -3,7 +3,7 @@ package fr.app.lorcanaDex.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -12,30 +12,26 @@ import java.util.Map;
 public class CloudinaryService {
 
     private Cloudinary cloudinary;
-
-    @Value("${cloudinary.cloud_name}")
     private String cloudName;
-
-    @Value("${cloudinary.api_key}")
     private String apiKey;
-
-    @Value("${cloudinary.api_secret}")
     private String apiSecret;
 
-    public CloudinaryService() {
+    public CloudinaryService(Environment env) {
+        this.cloudName = env.getProperty("cloudinary.cloud_name");
+        this.apiKey = env.getProperty("cloudinary.api_key");
+        this.apiSecret = env.getProperty("cloudinary.api_secret");
         cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", cloudName,
-                "api_key", apiKey,
-                "api_secret", apiSecret));
+                "cloud_name", this.cloudName,
+                "api_key", this.apiKey,
+                "api_secret", this.apiSecret));
     }
 
     public String uploadImage(String imagePath) {
         try {
-            // System.out.println("Uploading image with path: " + imagePath);
             Map uploadResult = cloudinary.uploader().upload(imagePath, ObjectUtils.asMap(
                     "transformation", new com.cloudinary.Transformation()
                             .width(300)
-                            .height(400)
+                            .height(418)
                             .crop("fill"),
                     "format", "avif"));
             // System.out.println("Upload result: " + uploadResult);
