@@ -36,11 +36,12 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
         http.authorizeHttpRequests((authorize) -> authorize
 
-                .requestMatchers("/").permitAll()
-                .requestMatchers("/login").permitAll()
+                // .requestMatchers("/").permitAll()
+                .requestMatchers("/auth").permitAll()
                 // .requestMatchers("/bulk-data").permitAll()
                 // .requestMatchers("/get-cards").permitAll()
                 .anyRequest().authenticated()
+        // .anyRequest().permitAll()
 
         );
 

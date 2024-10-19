@@ -16,36 +16,41 @@ import java.util.Arrays;
 // @EnableWebMvc
 public class WebConfig {
 
-    @Bean
-    public FilterRegistrationBean<CorsFilter> corsFilter() {
+        @Bean
+        public FilterRegistrationBean<CorsFilter> corsFilter() {
 
-        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+                UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
 
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
+                CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addAllowedOrigin("http://localhost:4200");
-        corsConfiguration.setAllowedHeaders(Arrays.asList(
-                HttpHeaders.AUTHORIZATION,
-                HttpHeaders.CONTENT_TYPE,
-                HttpHeaders.ACCEPT));
+                corsConfiguration.setAllowCredentials(true);
+                corsConfiguration.addAllowedOrigin("http://localhost:4200");
+                corsConfiguration.setAllowedHeaders(Arrays.asList(
 
-        corsConfiguration.setAllowedMethods(Arrays.asList(
-                HttpMethod.GET.name(),
-                HttpMethod.POST.name(),
-                HttpMethod.PUT.name(),
-                HttpMethod.DELETE.name()));
+                                HttpHeaders.AUTHORIZATION,
+                                HttpHeaders.CONTENT_TYPE,
+                                HttpHeaders.ACCEPT,
+                                HttpHeaders.ORIGIN,
+                                "username"));
 
-        corsConfiguration.setMaxAge(3600L); // Cache la configuration pendant 3600 secondes (1 heure)
+                corsConfiguration.setAllowedMethods(Arrays.asList(
 
-        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+                                HttpMethod.GET.name(),
+                                HttpMethod.POST.name(),
+                                HttpMethod.PUT.name(),
+                                HttpMethod.DELETE.name(),
+                                HttpMethod.OPTIONS.name()));
 
-        FilterRegistrationBean<CorsFilter> filterRegistrationBean = new FilterRegistrationBean<>(
-                new CorsFilter(urlBasedCorsConfigurationSource));
+                corsConfiguration.setMaxAge(3600L); // Cache la configuration pendant 3600 secondes (1 heure)
 
-        filterRegistrationBean.setOrder(-102);
+                urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 
-        return filterRegistrationBean;
-    }
+                FilterRegistrationBean<CorsFilter> filterRegistrationBean = new FilterRegistrationBean<>(
+                                new CorsFilter(urlBasedCorsConfigurationSource));
+
+                filterRegistrationBean.setOrder(-102);
+
+                return filterRegistrationBean;
+        }
 
 }

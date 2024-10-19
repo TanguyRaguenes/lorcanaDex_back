@@ -7,18 +7,22 @@ public class Deck {
 
     private Long deckId;
     private String deckName;
-    private String userName;
+    private String username;
     private Date creationDate;
     private Date updateDate;
     private String firstInk;
     private String secondInk;
     private List<Card> cardsArray;
 
-    public Deck(Long deckId, String deckName, String userName, Date creationDate, Date updateDate, String firstInk,
+    public Deck() {
+        super();
+    }
+
+    public Deck(Long deckId, String deckName, String username, Date creationDate, Date updateDate, String firstInk,
             String secondInk, List<Card> cardsArray) {
         this.deckId = deckId;
         this.deckName = deckName;
-        this.userName = userName;
+        this.username = username;
         this.creationDate = creationDate;
         this.updateDate = updateDate;
         this.firstInk = firstInk;
@@ -42,12 +46,12 @@ public class Deck {
         this.deckName = deckName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Date getCreationDate() {
@@ -92,7 +96,7 @@ public class Deck {
 
     @Override
     public String toString() {
-        return "Deck [deckId=" + deckId + ", deckName=" + deckName + ", userName=" + userName + ", creationDate="
+        return "Deck [deckId=" + deckId + ", deckName=" + deckName + ", username=" + username + ", creationDate="
                 + creationDate + ", updateDate=" + updateDate + ", firstInk=" + firstInk + ", secondInk=" + secondInk
                 + ", cardsArray=" + cardsArray + "]";
     }

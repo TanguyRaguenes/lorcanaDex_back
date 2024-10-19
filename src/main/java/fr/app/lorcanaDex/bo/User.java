@@ -6,6 +6,10 @@ public class User {
     private String login;
     private String password;
 
+    public User() {
+        super();
+    }
+
     public User(Long id_account, String login, String password) {
         this.id_account = id_account;
         this.login = login;

@@ -1,18 +1,18 @@
 package fr.app.lorcanaDex.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.*;
-
-import fr.app.lorcanaDex.dto.AuthRequest;
-import fr.app.lorcanaDex.dto.AuthResponse;
 import fr.app.lorcanaDex.security.JwtUtil;
+import java.util.Map;
+import java.util.HashMap;
 
 @RestController
+@RequestMapping("auth")
 public class AuthController {
 
     private AuthenticationManager authenticationManager;
@@ -23,27 +23,33 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    @GetMapping("/")
-    public String home() {
-        return "Dans le back";
-    }
+    @PostMapping("")
+    public Map<String, String> authentication(@RequestBody Map<String, String> requestBody) {
 
-    @PostMapping("/login")
-    // @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authRequest) {
+        Map<String, String> response = new HashMap<>();
 
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+        final String username = requestBody.get("username");
+        final String password = requestBody.get("password");
 
-            final String jwt = jwtUtil.generateToken(authRequest.getUsername());
+        if (username != null && password != null) {
+            try {
 
-            return ResponseEntity.ok(new AuthResponse(jwt));
+                System.out.println(username + " " + password);
 
-        } catch (AuthenticationException e) {
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+                String jwt = jwtUtil.generateToken(username);
+                response.put("token", jwt);
+                response.put("username", username);
 
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Nom d'utilisateur ou mot de passe incorrect");
-
+            } catch (Exception e) {
+                response.put("error", "authentication fail");
+                System.out.println(e);
+            }
+        } else {
+            response.put("error", "username and/or password are null");
         }
+
+        System.out.println(response);
+        return response;
     }
 }
