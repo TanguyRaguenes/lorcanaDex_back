@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -11,7 +12,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import fr.app.lorcanaDex.bo.Deck;
-
 
 @Repository
 public class DecksDao implements IDecksDao {
@@ -62,6 +62,20 @@ public class DecksDao implements IDecksDao {
         }
 
         return decks;
+    }
+
+    @Override
+    public void removeDeckFromBDD(Integer deckId) {
+        final String sql = "DELETE FROM decks WHERE deckId = ?";
+
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, deckId);
+            if (rowsAffected == 0) {
+                throw new EmptyResultDataAccessException("No deck found with ID " + deckId, 1);
+            }
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Erreur avec la requête SQL " + e.getMessage(), e);
+        }
     }
 
 }

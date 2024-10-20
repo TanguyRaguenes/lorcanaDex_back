@@ -10,4 +10,6 @@ public interface IDecksDao {
 
     public List<Deck> getDecksFromBdd(String username);
 
+    public void removeDeckFromBDD(Integer deckId);
+
 }

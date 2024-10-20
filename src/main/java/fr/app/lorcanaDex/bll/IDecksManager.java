@@ -9,4 +9,6 @@ public interface IDecksManager {
 
     public List<Deck> getDecksFromBdd(String username);
 
+    public void removeDeckFromBDD(Integer deckId);
+
 }

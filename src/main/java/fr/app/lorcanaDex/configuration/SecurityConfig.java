@@ -37,7 +37,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests((authorize) -> authorize
 
                 // .requestMatchers("/").permitAll()
-                .requestMatchers("/auth").permitAll()
+                .requestMatchers("/auth/authentificate").permitAll()
                 // .requestMatchers("/bulk-data").permitAll()
                 // .requestMatchers("/get-cards").permitAll()
                 .anyRequest().authenticated()

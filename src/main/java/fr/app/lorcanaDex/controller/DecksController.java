@@ -1,11 +1,16 @@
 package fr.app.lorcanaDex.controller;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.app.lorcanaDex.bll.IDecksManager;
@@ -60,19 +65,24 @@ public class DecksController {
     }
 
     @DeleteMapping("")
-    public Map<String, String> deleteDeck(@RequestBody String username, @RequestBody String deckName) {
+    public ResponseEntity<Map<String, String>> removeDeckFromBdd(@RequestParam Integer deckId) {
 
         Map<String, String> response = new HashMap<>();
 
-        if (username != null && deckName != null) {
-
-            response.put("response", username + "_" + deckName);
-
-        } else {
-            response.put("response", "fail");
+        try {
+            decksManager.removeDeckFromBDD(deckId);
+            response.put("response", "Suppression réussie du deck avec l'ID " + deckId);
+            return ResponseEntity.ok(response);
+        } catch (EmptyResultDataAccessException e) {
+            response.put("error", "Deck avec l'ID " + deckId + " introuvable.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        } catch (DataAccessException e) {
+            response.put("error", "Erreur de base de données lors de la suppression du deck : " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        } catch (Exception e) {
+            response.put("error", "Une erreur inattendue est survenue : " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
-
-        return response;
 
     }
 

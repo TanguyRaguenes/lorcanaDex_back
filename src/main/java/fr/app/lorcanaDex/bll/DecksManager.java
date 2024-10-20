@@ -32,4 +32,9 @@ public class DecksManager implements IDecksManager {
         return decksDao.getDecksFromBdd(username);
     }
 
+    @Override
+    public void removeDeckFromBDD(Integer deckId) {
+        decksDao.removeDeckFromBDD(deckId);
+    }
+
 }

@@ -1,7 +1,9 @@
 package fr.app.lorcanaDex.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +25,8 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("")
-    public Map<String, String> authentication(@RequestBody Map<String, String> requestBody) {
+    @PostMapping("/authentificate")
+    public Map<String, String> authentificate(@RequestBody Map<String, String> requestBody) {
 
         Map<String, String> response = new HashMap<>();
 
@@ -51,5 +53,26 @@ public class AuthController {
 
         System.out.println(response);
         return response;
+    }
+
+    @PostMapping("/renewToken")
+    public ResponseEntity<Map<String, String>> renewToken(@RequestBody Map<String, String> requestBody) {
+
+        Map<String, String> response = new HashMap<>();
+
+        try {
+            String username = requestBody.get("username");
+            if (username == null) {
+                throw new IllegalArgumentException("Le nom de l'utilisateur est null");
+            }
+            String jwt = jwtUtil.generateToken(username);
+            response.put("token", jwt);
+            response.put("username", username);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            response.put("erreur", "Impossible de renouveller le token");
+            return ResponseEntity.status(400).body(response);
+        }
+
     }
 }
