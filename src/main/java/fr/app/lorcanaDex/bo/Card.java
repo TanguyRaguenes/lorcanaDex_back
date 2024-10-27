@@ -1,5 +1,6 @@
 package fr.app.lorcanaDex.bo;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Card {
@@ -33,55 +34,80 @@ public class Card {
     // "Strength": 9,
     // "Set_ID": "INK"
 
-    @JsonProperty("Artist")
+    // @JsonProperty("Artist")
+    @JsonAlias({ "Artist", "artist" })
     private String artist;
-    @JsonProperty("Set_Name")
+
+    @JsonAlias({ "Set_Name", "lorcanaSetName" })
     private String lorcanaSetName;
-    @JsonProperty("Classifications")
+
+    @JsonAlias({ "Classifications", "classifications" })
     private String classifications;
-    @JsonProperty("Date_Added")
+
+    @JsonAlias({ "Date_Added", "dateAdded" })
     private String dateAdded;
-    @JsonProperty("Set_Num")
+
+    @JsonAlias({ "Set_Num", "setNum" })
     private Long setNum;
-    @JsonProperty("Color")
+
+    @JsonAlias({ "Color", "color" })
     private String color;
-    @JsonProperty("Gamemode")
+
+    @JsonAlias({ "Gamemode", "gamemode" })
     private String gamemode;
-    @JsonProperty("Franchise")
+
+    @JsonAlias({ "Franchise", "franchise" })
     private String franchise;
-    @JsonProperty("Image")
+
+    @JsonAlias({ "Image", "image" })
     private String image;
-    @JsonProperty("ImageSmall")
+
+    @JsonAlias({ "ImageSmall", "imageSmall" })
     private String imageSmall;
-    @JsonProperty("Cost")
+
+    @JsonAlias({ "Cost", "cost" })
     private Long cost;
-    @JsonProperty("Inkable")
+
+    @JsonAlias({ "Inkable", "inkable" })
     private boolean inkable;
-    @JsonProperty("Name")
+
+    @JsonAlias({ "Name", "name" })
     private String name;
-    @JsonProperty("Type")
+
+    @JsonAlias({ "Type", "type" })
     private String type;
-    @JsonProperty("Lore")
+
+    @JsonAlias({ "Lore", "lore" })
     private Long lore;
-    @JsonProperty("Rarity")
+
+    @JsonAlias({ "Rarity", "rarity" })
     private String rarity;
-    @JsonProperty("Flavor_Text")
+
+    @JsonAlias({ "Flavor_Text", "flavorText" })
     private String flavorText;
-    @JsonProperty("Unique_ID")
+
+    @JsonAlias({ "Unique_ID", "uniqueId" })
     private String uniqueId;
-    @JsonProperty("Card_Num")
+
+    @JsonAlias({ "Card_Num", "cardNum" })
     private Long cardNum;
-    @JsonProperty("Body_Text")
+
+    @JsonAlias({ "Body_Text", "bodyText" })
     private String bodyText;
-    @JsonProperty("Willpower")
+
+    @JsonAlias({ "Willpower", "willpower" })
     private Long willpower;
-    @JsonProperty("Card_Variants")
+
+    @JsonAlias({ "Card_Variants", "cardVariants" })
     private String cardVariants;
-    @JsonProperty("Date_Modified")
+
+    @JsonAlias({ "Date_Modified", "dateModified" })
     private String dateModified;
-    @JsonProperty("Strength")
+
+    @JsonAlias({ "Strength", "strength" })
     private Long strength;
-    @JsonProperty("Set_ID")
+
+    @JsonAlias({ "Set_ID", "setId" })
     private String setId;
 
     public Card() {
