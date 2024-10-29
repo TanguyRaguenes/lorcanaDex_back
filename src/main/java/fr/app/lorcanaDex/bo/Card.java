@@ -34,92 +34,95 @@ public class Card {
     // "Strength": 9,
     // "Set_ID": "INK"
 
-    // @JsonProperty("Artist")
-    @JsonAlias({ "Artist", "artist" })
+    private Long cardId;
+
+    @JsonAlias({ "Artist" })
     private String artist;
 
-    @JsonAlias({ "Set_Name", "lorcanaSetName" })
+    @JsonAlias({ "Set_Name" })
     private String lorcanaSetName;
 
-    @JsonAlias({ "Classifications", "classifications" })
+    @JsonAlias({ "Classifications" })
     private String classifications;
 
-    @JsonAlias({ "Date_Added", "dateAdded" })
+    @JsonAlias({ "Date_Added" })
     private String dateAdded;
 
-    @JsonAlias({ "Set_Num", "setNum" })
+    @JsonAlias({ "Set_Num" })
     private Long setNum;
 
-    @JsonAlias({ "Color", "color" })
+    @JsonAlias({ "Color" })
     private String color;
 
-    @JsonAlias({ "Gamemode", "gamemode" })
+    @JsonAlias({ "Gamemode" })
     private String gamemode;
 
-    @JsonAlias({ "Franchise", "franchise" })
+    @JsonAlias({ "Franchise" })
     private String franchise;
 
-    @JsonAlias({ "Image", "image" })
+    @JsonAlias({ "Image" })
     private String image;
 
-    @JsonAlias({ "ImageSmall", "imageSmall" })
+    @JsonAlias({ "ImageSmall" })
     private String imageSmall;
 
-    @JsonAlias({ "Cost", "cost" })
+    @JsonAlias({ "Cost" })
     private Long cost;
 
-    @JsonAlias({ "Inkable", "inkable" })
+    @JsonAlias({ "Inkable" })
     private boolean inkable;
 
-    @JsonAlias({ "Name", "name" })
+    @JsonAlias({ "Name" })
     private String name;
 
-    @JsonAlias({ "Type", "type" })
+    @JsonAlias({ "Type" })
     private String type;
 
-    @JsonAlias({ "Lore", "lore" })
+    @JsonAlias({ "Lore" })
     private Long lore;
 
-    @JsonAlias({ "Rarity", "rarity" })
+    @JsonAlias({ "Rarity" })
     private String rarity;
 
-    @JsonAlias({ "Flavor_Text", "flavorText" })
+    @JsonAlias({ "Flavor_Text" })
     private String flavorText;
 
-    @JsonAlias({ "Unique_ID", "uniqueId" })
+    @JsonAlias({ "Unique_ID" })
     private String uniqueId;
 
-    @JsonAlias({ "Card_Num", "cardNum" })
+    @JsonAlias({ "Card_Num" })
     private Long cardNum;
 
-    @JsonAlias({ "Body_Text", "bodyText" })
+    @JsonAlias({ "Body_Text" })
     private String bodyText;
 
-    @JsonAlias({ "Willpower", "willpower" })
+    @JsonAlias({ "Willpower" })
     private Long willpower;
 
-    @JsonAlias({ "Card_Variants", "cardVariants" })
+    @JsonAlias({ "Card_Variants" })
     private String cardVariants;
 
-    @JsonAlias({ "Date_Modified", "dateModified" })
+    @JsonAlias({ "Date_Modified" })
     private String dateModified;
 
-    @JsonAlias({ "Strength", "strength" })
+    @JsonAlias({ "Strength" })
     private Long strength;
 
-    @JsonAlias({ "Set_ID", "setId" })
+    @JsonAlias({ "Set_ID" })
     private String setId;
 
     public Card() {
         super();
     }
 
-    public Card(String artist, String lorcanaSetName, String classifications, String dateAdded, Long setNum,
+    public Card(Long cardId, String artist, String lorcanaSetName, String classifications, String dateAdded,
+            Long setNum,
             String color,
             String gamemode, String franchise, String image, String imageSmall, Long cost, boolean inkable, String name,
             String type,
             Long lore, String rarity, String flavorText, String uniqueId, Long cardNum, String bodyText, Long willpower,
             String cardVariants, String dateModified, Long strength, String setId) {
+        this.cardId = cardId;
         this.artist = artist;
         this.lorcanaSetName = lorcanaSetName;
         this.classifications = classifications;
@@ -145,6 +148,14 @@ public class Card {
         this.dateModified = dateModified;
         this.strength = strength;
         this.setId = setId;
+    }
+
+    public Long getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(Long cardId) {
+        this.cardId = cardId;
     }
 
     public String getArtist() {
@@ -349,13 +360,14 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card [artist=" + artist + ", setName=" + lorcanaSetName + ", classifications=" + classifications
-                + ", dateAdded=" + dateAdded + ", setNum=" + setNum + ", color=" + color + ", gamemode=" + gamemode
-                + ", franchise=" + franchise + ", image=" + image + ", cost=" + cost + ", inkable=" + inkable
-                + ", name=" + name + ", type=" + type + ", lore=" + lore + ", rarity=" + rarity + ", flavorText="
-                + flavorText + ", uniqueId=" + uniqueId + ", cardNum=" + cardNum + ", bodyText=" + bodyText
-                + ", willpower=" + willpower + ", cardVariants=" + cardVariants + ", dateModified=" + dateModified
-                + ", strength=" + strength + ", setId=" + setId + "]";
+        return "Card [cardId=" + cardId + ", artist=" + artist + ", lorcanaSetName=" + lorcanaSetName
+                + ", classifications=" + classifications + ", dateAdded=" + dateAdded + ", setNum=" + setNum
+                + ", color=" + color + ", gamemode=" + gamemode + ", franchise=" + franchise + ", image=" + image
+                + ", imageSmall=" + imageSmall + ", cost=" + cost + ", inkable=" + inkable + ", name=" + name
+                + ", type=" + type + ", lore=" + lore + ", rarity=" + rarity + ", flavorText=" + flavorText
+                + ", uniqueId=" + uniqueId + ", cardNum=" + cardNum + ", bodyText=" + bodyText + ", willpower="
+                + willpower + ", cardVariants=" + cardVariants + ", dateModified=" + dateModified + ", strength="
+                + strength + ", setId=" + setId + "]";
     }
 
 }
