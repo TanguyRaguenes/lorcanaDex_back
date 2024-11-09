@@ -1,5 +1,6 @@
 package fr.app.lorcanaDex.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +25,7 @@ public class DeckController {
     }
 
     @PostMapping("/{deckId}")
-    public Map<String, Map<Integer, Integer>> saveDeckCardsInBdd(@PathVariable Integer deckId,
+    public Map<String, Map<Integer, Integer>> addCardsToDeck(@PathVariable Integer deckId,
             @RequestBody Map<Integer, Integer> cardsAndQuantity) {
 
         System.out.println("deckId" + deckId);
@@ -32,6 +33,16 @@ public class DeckController {
         deckManager.addCardsToDeck(deckId, cardsAndQuantity);
         Map<String, Map<Integer, Integer>> response = new HashMap<>();
         response.put("back response", cardsAndQuantity);
+        return response;
+    }
+
+    @GetMapping("/{deckId}")
+    public Map<Integer, Integer> getDeckCards(@PathVariable Integer deckId) {
+
+        System.out.println("deckId : " + deckId);
+
+        Map<Integer, Integer> response = deckManager.getDeckCards(deckId);
+
         return response;
     }
 

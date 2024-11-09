@@ -66,6 +66,7 @@ public class DecksDao implements IDecksDao {
 
     @Override
     public void removeDeckFromBDD(Integer deckId) {
+
         final String sql = "DELETE FROM decks WHERE deckId = ?";
 
         try {
@@ -76,6 +77,7 @@ public class DecksDao implements IDecksDao {
         } catch (DataAccessException e) {
             throw new RuntimeException("Erreur avec la requête SQL " + e.getMessage(), e);
         }
+
     }
 
 }

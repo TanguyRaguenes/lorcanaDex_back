@@ -1,8 +1,11 @@
 package fr.app.lorcanaDex.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -28,6 +31,8 @@ public class DeckDao implements IDeckDao {
 
         if (deckId != null) {
 
+            this.deleteDeckCards(deckId);
+
             cardsAndQuantity.forEach((cardId, quantity) -> {
 
                 try {
@@ -48,6 +53,36 @@ public class DeckDao implements IDeckDao {
         }
 
         return;
+
+    }
+
+    @Override
+    public Map<Integer, Integer> getDeckCards(Integer deckId) {
+
+        Map<Integer, Integer> cards = new HashMap<>();
+
+        jdbcTemplate.query("SELECT cardId, quantity FROM deckDetails WHERE deckId = ?",
+                rs -> {
+                    cards.put(rs.getInt("cardId"), rs.getInt("quantity"));
+                },
+                deckId);
+
+        System.out.println(cards);
+
+        return cards;
+    }
+
+    public void deleteDeckCards(Integer deckId) {
+
+        final String sql = "DELETE FROM deckDetails WHERE deckId = ?";
+
+        try {
+
+            jdbcTemplate.update(sql, deckId);
+
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Error sql request deleteDeckCards : " + e.getMessage(), e);
+        }
 
     }
 

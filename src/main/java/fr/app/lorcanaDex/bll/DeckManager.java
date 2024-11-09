@@ -17,7 +17,12 @@ public class DeckManager implements IDeckManager {
 
     @Override
     public void addCardsToDeck(Integer deckId, Map<Integer, Integer> cardsAndQuantity) {
-        deckDao.addCardsToDeck(deckId,cardsAndQuantity);
+        deckDao.addCardsToDeck(deckId, cardsAndQuantity);
+    }
+
+    @Override
+    public Map<Integer, Integer> getDeckCards(Integer deckId) {
+        return deckDao.getDeckCards(deckId);
     }
 
 }
