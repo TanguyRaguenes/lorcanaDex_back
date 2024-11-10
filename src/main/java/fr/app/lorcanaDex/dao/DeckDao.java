@@ -1,19 +1,13 @@
 package fr.app.lorcanaDex.dao;
 
 import java.util.HashMap;
-import java.util.List;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 import java.util.Map;
-
-import fr.app.lorcanaDex.bo.Card;
 
 @Repository
 public class DeckDao implements IDeckDao {
@@ -26,26 +20,27 @@ public class DeckDao implements IDeckDao {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
+    // AJOUTER DES CARTES AU DECK
+
     @Override
     public void addCardsToDeck(Integer deckId, Map<Integer, Integer> cardsAndQuantity) {
 
         if (deckId != null) {
+
+            // ON COMMENCE PAR VIDER LE DECK
 
             this.deleteDeckCards(deckId);
 
             cardsAndQuantity.forEach((cardId, quantity) -> {
 
                 try {
-                    String sql = "INSERT INTO deckDetails(deckId,cardId,quantity) VALUES (:deckId,:cardId,:quantity)";
-                    MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-                    mapSqlParameterSource.addValue("deckId", deckId);
-                    mapSqlParameterSource.addValue("cardId", cardId);
-                    mapSqlParameterSource.addValue("quantity", quantity);
 
-                    namedParameterJdbcTemplate.update(sql, mapSqlParameterSource);
+                    jdbcTemplate.update(
+                            "INSERT INTO deckDetails(deckId,cardId,quantity) VALUES (:deckId,:cardId,:quantity)",
+                            deckId, cardId, quantity);
 
                 } catch (DataAccessException e) {
-                    throw new RuntimeException("Erreur avec la requête SQL" + e.getMessage() + e);
+                    throw new RuntimeException("Error sql request addCardsToDeck" + e.getMessage() + e);
                 }
 
             });
@@ -55,6 +50,8 @@ public class DeckDao implements IDeckDao {
         return;
 
     }
+
+    // RECUPERER LES CARTES DU DECK
 
     @Override
     public Map<Integer, Integer> getDeckCards(Integer deckId) {
@@ -72,13 +69,13 @@ public class DeckDao implements IDeckDao {
         return cards;
     }
 
-    public void deleteDeckCards(Integer deckId) {
+    // SUPPRIMER LES CARTES DU DECK
 
-        final String sql = "DELETE FROM deckDetails WHERE deckId = ?";
+    public void deleteDeckCards(Integer deckId) {
 
         try {
 
-            jdbcTemplate.update(sql, deckId);
+            jdbcTemplate.update("DELETE FROM deckDetails WHERE deckId = ?", deckId);
 
         } catch (DataAccessException e) {
             throw new RuntimeException("Error sql request deleteDeckCards : " + e.getMessage(), e);
