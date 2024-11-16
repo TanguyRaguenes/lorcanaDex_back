@@ -58,7 +58,8 @@ public class DecksController {
 
         String jwtToken = token.substring(7);
         String username = jwtUtil.extractUsername(jwtToken);
-        System.out.println("Voici le username récupéré à partir du jwtToken " + username);
+        System.out.println("Voici le username récupéré à partir du jwtToken " +
+                username);
 
         List<Deck> decks = new ArrayList<>();
 
@@ -73,6 +74,22 @@ public class DecksController {
         return decks;
 
     }
+
+    // @GetMapping("")
+    // public Map<String, String> getDecksFromBdd(@RequestHeader("Authorization")
+    // String token) {
+
+    // String jwtToken = token.substring(7);
+    // String username = jwtUtil.extractUsername(jwtToken);
+    // System.out.println("Voici le username récupéré à partir du jwtToken " +
+    // username);
+
+    // Map<String, String> response = new HashMap<>();
+    // response.put("response", username);
+
+    // return response;
+
+    // }
 
     @DeleteMapping("")
     public ResponseEntity<Map<String, String>> removeDeckFromBdd(@RequestParam Integer deckId) {
