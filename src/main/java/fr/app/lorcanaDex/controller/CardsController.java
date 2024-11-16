@@ -21,7 +21,7 @@ public class CardsController {
         this.cardsManager = cardsManager;
     }
 
-    // WebClient.Builder builder = WebClient.builder();
+    WebClient.Builder builder = WebClient.builder();
 
     @GetMapping("/bulk-data")
     // @CrossOrigin(origins = "http://localhost:4200")

@@ -54,14 +54,12 @@ public class DecksController {
     }
 
     @GetMapping("")
-    public List<Deck> getDecksFromBdd() {
+    public List<Deck> getDecksFromBdd(@RequestHeader("Authorization") String token) {
 
-        // @RequestHeader("Authorization") String token
-        // String jwtToken = token.substring(7);
-        // String username = jwtUtil.extractUsername(jwtToken);
-        // System.out.println("Voici le username récupéré à partir du jwtToken " +
-        // username);
-        String username = "tanguy.raguenes@gmail.com";
+        String jwtToken = token.substring(7);
+        String username = jwtUtil.extractUsername(jwtToken);
+        System.out.println("Voici le username récupéré à partir du jwtToken " + username);
+
         List<Deck> decks = new ArrayList<>();
 
         if (username != null && !username.isEmpty()) {
