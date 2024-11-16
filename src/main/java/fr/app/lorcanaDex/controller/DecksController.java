@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.app.lorcanaDex.bll.IDecksManager;
 import fr.app.lorcanaDex.bo.Deck;
+import fr.app.lorcanaDex.security.JwtUtil;
 
 import java.util.Map;
 import java.util.ArrayList;
@@ -28,11 +29,13 @@ public class DecksController {
     // ATTRIBUTS
 
     private IDecksManager decksManager;
+    private JwtUtil jwtUtil;
 
     // CONSTRUCTEUR
 
-    public DecksController(IDecksManager decksManager) {
+    public DecksController(IDecksManager decksManager, JwtUtil jwtUtil) {
         this.decksManager = decksManager;
+        this.jwtUtil = jwtUtil;
     }
 
     // METHODES
@@ -48,7 +51,11 @@ public class DecksController {
     }
 
     @GetMapping("")
-    public List<Deck> getDecksFromBdd(@RequestHeader("username") String username) {
+    public List<Deck> getDecksFromBdd(@RequestHeader("Authorization") String token) {
+
+        String jwtToken = token.substring(7);
+        String username = jwtUtil.extractUsername(jwtToken);
+        System.out.println("Voici le username récupéré à partir du jwtToken " + username);
 
         List<Deck> decks = new ArrayList<>();
 
