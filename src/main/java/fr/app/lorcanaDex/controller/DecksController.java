@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import fr.app.lorcanaDex.bll.IDecksManager;
 import fr.app.lorcanaDex.bo.Deck;
@@ -37,6 +38,8 @@ public class DecksController {
         this.decksManager = decksManager;
         this.jwtUtil = jwtUtil;
     }
+
+    // WebClient.Builder builder = WebClient.builder();
 
     // METHODES
 
