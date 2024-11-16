@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/auth/authentificate").permitAll()
                 .requestMatchers("/registration").permitAll()
+                .requestMatchers("/decks").permitAll()
                 .requestMatchers("/bulk-data").permitAll()
                 // .requestMatchers("/get-cards").permitAll()
                 .anyRequest().authenticated()

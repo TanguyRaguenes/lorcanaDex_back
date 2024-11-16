@@ -35,8 +35,7 @@ public class WebConfig {
                                 HttpHeaders.AUTHORIZATION,
                                 HttpHeaders.CONTENT_TYPE,
                                 HttpHeaders.ACCEPT,
-                                HttpHeaders.ORIGIN,
-                                "username"));
+                                HttpHeaders.ORIGIN));
 
                 corsConfiguration.setAllowedMethods(Arrays.asList(
 
