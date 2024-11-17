@@ -36,7 +36,7 @@ public class DeckDao implements IDeckDao {
                 try {
 
                     jdbcTemplate.update(
-                            "INSERT INTO deckDetails(deckId,cardId,quantity) VALUES (:deckId,:cardId,:quantity)",
+                            "INSERT INTO deckDetails(deckId,cardId,quantity) VALUES (?,?,?)",
                             deckId, cardId, quantity);
 
                 } catch (DataAccessException e) {
