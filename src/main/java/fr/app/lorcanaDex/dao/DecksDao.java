@@ -55,7 +55,7 @@ public class DecksDao implements IDecksDao {
 
         List<Deck> decks = new ArrayList<>();
         try {
-            decks = jdbcTemplate.query("SELECT * FROM db_lorcanadex.decks WHERE username = ?",
+            decks = jdbcTemplate.query("SELECT * FROM decks WHERE username = ?",
                     new BeanPropertyRowMapper<Deck>(Deck.class), username);
         } catch (DataAccessException e) {
             throw new RuntimeException("Erreur avec la requête SQL" + e.getMessage() + e);
