@@ -1,5 +1,6 @@
 package fr.app.lorcanaDex.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import fr.app.lorcanaDex.bo.Card;
+import fr.app.lorcanaDex.bo.CardApiLorcast;
+import fr.app.lorcanaDex.bo.SetApiLorcast;
 import fr.app.lorcanaDex.service.CloudinaryService;
 
 @Repository
@@ -113,6 +116,91 @@ public class CardsDao implements ICardsDao {
         List<Card> cards = null;
 
         cards = jdbcTemplate.query("SELECT * FROM cards", new BeanPropertyRowMapper<Card>(Card.class));
+
+        return cards;
+    }
+
+    @Override
+    public void bulk(List<SetApiLorcast> sets, List<CardApiLorcast> cards) {
+
+        jdbcTemplate.execute("SET FOREIGN_KEY_CHECKS = 0");
+        jdbcTemplate.execute("TRUNCATE TABLE cards_api_lorcast");
+        jdbcTemplate.execute("TRUNCATE TABLE sets_api_lorcast");
+        jdbcTemplate.execute("SET FOREIGN_KEY_CHECKS = 1");
+
+        String sql = "INSERT INTO sets_Api_Lorcast ("
+                + "setIdApi, name, code, releasedAt, prereleasedAt"
+                + ") VALUES (?, ?, ?, ?, ?)";
+
+        for (SetApiLorcast set : sets) {
+            jdbcTemplate.update(sql,
+                    set.getSetIdApi(),
+                    set.getName(),
+                    set.getCode(),
+                    set.getReleasedAt(),
+                    set.getPrereleasedAt());
+        }
+
+        sql = "INSERT INTO cards_Api_Lorcast ("
+                + "cardIdApi, name, version, layout, releasedAt, "
+                + "imageSmallUrl, imageNormalUrl, imageLargeUrl, cost, inkwell, "
+                + "ink, type, classifications, text, keywords, "
+                + "moveCost, strength, willpower, lore, rarity, "
+                + "illustrators, collectorNumber, lang, flavorText, tcgplayerId, "
+                + "legalityCore, setIdApi, setName, setCode, pricesUsd, pricesUsdFoil"
+                + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        for (CardApiLorcast card : cards) {
+
+            jdbcTemplate.update(sql,
+                    card.getCardIdApi(),
+                    card.getName(),
+                    card.getVersion(),
+                    card.getLayout(),
+                    card.getReleasedAt(),
+                    card.getImageUris() != null && card.getImageUris().getDigital() != null
+                            ? card.getImageUris().getDigital().getSmall()
+                            : null,
+                    card.getImageUris() != null && card.getImageUris().getDigital() != null
+                            ? card.getImageUris().getDigital().getNormal()
+                            : null,
+                    card.getImageUris() != null && card.getImageUris().getDigital() != null
+                            ? card.getImageUris().getDigital().getLarge()
+                            : null,
+                    card.getCost(),
+                    card.getInkwell(),
+                    card.getInk(),
+                    card.getType() != null ? String.join(",", card.getType()) : null,
+                    card.getClassifications() != null ? String.join(",", card.getClassifications()) : null,
+                    card.getText(),
+                    card.getKeywords() != null ? String.join(",", card.getKeywords()) : null,
+                    card.getMoveCost(),
+                    card.getStrength(),
+                    card.getWillpower(),
+                    card.getLore(),
+                    card.getRarity(),
+                    card.getIllustrators() != null ? String.join(",", card.getIllustrators()) : null,
+                    card.getCollectorNumber(),
+                    card.getLang(),
+                    card.getFlavorText(),
+                    card.getTcgplayerId(),
+                    card.getLegalities() != null ? card.getLegalities().getCore() : null,
+                    card.getSet() != null ? card.getSet().getSetIdApi() : null,
+                    card.getSet() != null ? card.getSet().getName() : null,
+                    card.getSet() != null ? card.getSet().getCode() : null,
+                    card.getPrices() != null ? card.getPrices().getUsd() : null,
+                    card.getPrices() != null ? card.getPrices().getUsdFoil() : null);
+        }
+
+    }
+
+    @Override
+    public List<CardApiLorcast> get() {
+
+        List<CardApiLorcast> cards = new ArrayList<CardApiLorcast>();
+
+        cards = jdbcTemplate.query("SELECT * FROM cards_api_lorcast",
+                new BeanPropertyRowMapper<CardApiLorcast>(CardApiLorcast.class));
 
         return cards;
     }

@@ -23,11 +23,11 @@ public class DigitalApiLorcast {
         this.small = small;
     }
 
-    public String getnormal() {
+    public String getNormal() {
         return normal;
     }
 
-    public void setnormal(String normal) {
+    public void setNormal(String normal) {
         this.normal = normal;
     }
 

@@ -35,55 +35,40 @@ public class CardsController {
     @GetMapping("/bulk")
     public Map<String, String> bulk() {
 
-        Map<String, String> response = new HashMap<String, String>();
+        List<CardApiLorcast> cards = new ArrayList<CardApiLorcast>();
 
-        String url = environment.getProperty("lorcastUrlGetSets");
+        Map<String, String> response = new HashMap<String, String>();
 
         List<SetApiLorcast> sets = builder.build()
                 .get()
-                .uri(url)
+                .uri(environment.getProperty("lorcastUrlGetSets"))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<Map<String, List<SetApiLorcast>>>() {
                 })
                 .map(resultMap -> resultMap.get("results")) // Extraire "results"
                 .block(); // Attendre la réponse
 
-        List<CardApiLorcast> allCards = null;
-
-        url = environment.getProperty("lorcastUrlGetCardsBySet");
-
-        System.out.println(url);
-
         for (SetApiLorcast set : sets) {
 
-            // System.out.println(set.toString());
-
-            System.out.println(set.getCode());
-
-            String json = builder.build()
+            List<CardApiLorcast> setCards = builder.build()
                     .get()
-                    .uri(url, set.getCode())
-                    .retrieve()
-                    .bodyToMono(String.class)
-                    .block();
-
-            System.out.println(json);
-
-            System.out.println("///////////////////////////////////////////");
-
-            List<CardApiLorcast> cards = builder.build()
-                    .get()
-                    .uri(url, set.getCode())
+                    .uri(environment.getProperty("lorcastUrlGetCardsBySet"), set.getCode())
                     .retrieve()
                     .bodyToFlux(CardApiLorcast.class)
                     .collectList()
                     .block();
 
-            for (CardApiLorcast card : cards) {
-                System.out.println(card.toString());
-                System.out.println("///////////////////////////////////////////");
-            }
+            cards.addAll(setCards);
+
         }
+
+        // for (CardApiLorcast card : allCards) {
+        // System.out.println(card.toString());
+        // System.out.println();
+        // System.out.println();
+        // }
+
+        cardsManager.bulk(sets, cards);
 
         response.put("Back response", "coucou");
         return response;
@@ -115,8 +100,14 @@ public class CardsController {
         // });
     }
 
+    @GetMapping("/get")
+    public List<CardApiLorcast> get() {
+
+        return cardsManager.get();
+
+    }
+
     @GetMapping("/get-cards")
-    // @CrossOrigin(origins = "http://localhost:4200")
     public List<Card> getCards() {
 
         return cardsManager.getCards();
