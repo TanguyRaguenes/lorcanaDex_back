@@ -114,15 +114,16 @@ public class CardsDao implements ICardsDao {
         return cards.isEmpty() ? null : cards.get(0);
     }
 
-    @Override
-    public List<Card> getCards() {
+    // @Override
+    // public List<Card> getCards() {
 
-        List<Card> cards = null;
+    // List<Card> cards = null;
 
-        cards = jdbcTemplate.query("SELECT * FROM cards", new BeanPropertyRowMapper<Card>(Card.class));
+    // cards = jdbcTemplate.query("SELECT * FROM cards", new
+    // BeanPropertyRowMapper<Card>(Card.class));
 
-        return cards;
-    }
+    // return cards;
+    // }
 
     @Override
     public void bulk(List<SetApiLorcast> sets, List<CardApiLorcast> cards) {
@@ -199,7 +200,7 @@ public class CardsDao implements ICardsDao {
     }
 
     @Override
-    public List<CardApiLorcast> get() {
+    public List<CardApiLorcast> getCards() {
 
         List<CardApiLorcast> cards = jdbcTemplate.query("SELECT * FROM cards_api_lorcast", (rs, rowNum) -> {
 
@@ -272,6 +273,18 @@ public class CardsDao implements ICardsDao {
         });
 
         return cards;
+    }
+
+    @Override
+    public List<SetApiLorcast> getSets() {
+
+        List<SetApiLorcast> sets = null;
+
+        sets = jdbcTemplate.query("SELECT * FROM sets_api_lorcast",
+                new BeanPropertyRowMapper<SetApiLorcast>(SetApiLorcast.class));
+
+        return sets;
+
     }
 
 }

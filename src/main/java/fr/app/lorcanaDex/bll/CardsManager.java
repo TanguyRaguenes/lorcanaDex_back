@@ -30,13 +30,18 @@ public class CardsManager implements ICardsManager {
     }
 
     @Override
-    public List<CardApiLorcast> get() {
-        return cardsDao.get();
+    public List<CardApiLorcast> getCards() {
+        return cardsDao.getCards();
     }
 
     @Override
-    public List<Card> getCards() {
-        return cardsDao.getCards();
+    public List<SetApiLorcast> getSets() {
+        return cardsDao.getSets();
     }
+
+    // @Override
+    // public List<Card> getCards() {
+    // return cardsDao.getCards();
+    // }
 
 }

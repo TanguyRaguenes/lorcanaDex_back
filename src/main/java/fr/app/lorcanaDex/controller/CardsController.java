@@ -72,7 +72,7 @@ public class CardsController {
 
         cardsManager.bulk(sets, cards);
 
-        response.put("Back response", "coucou");
+        response.put("Back response", "Bulk success");
         return response;
 
         // String url = "https://api.lorcana-api.com/bulk/cards";
@@ -102,17 +102,24 @@ public class CardsController {
         // });
     }
 
-    @GetMapping("/get")
-    public List<CardApiLorcast> get() {
-
-        return cardsManager.get();
-
-    }
-
-    @GetMapping("/get-cards")
-    public List<Card> getCards() {
+    @GetMapping("/getCards")
+    public List<CardApiLorcast> getCards() {
 
         return cardsManager.getCards();
 
     }
+
+    @GetMapping("/getSets")
+    public List<SetApiLorcast> getSets() {
+
+        return cardsManager.getSets();
+
+    }
+
+    // @GetMapping("/get-cards")
+    // public List<Card> getCardsa() {
+
+    // return cardsManager.getCards();
+
+    // }
 }
