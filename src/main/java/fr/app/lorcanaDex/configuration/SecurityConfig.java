@@ -42,6 +42,7 @@ public class SecurityConfig {
                 // .requestMatchers("/decks").permitAll()
                 .requestMatchers("/bulk-data").permitAll()
                 .requestMatchers("/cards/bulk").permitAll()
+                .requestMatchers("/cards/get").permitAll()
                 // .requestMatchers("/get-cards").permitAll()
                 .anyRequest().authenticated()
         // .anyRequest().permitAll()

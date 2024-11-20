@@ -107,9 +107,9 @@ public class CardApiLorcast {
     @JsonAlias("tcgplayer_id")
     private Long tcgplayerId;
 
-    private LegalitiesApiLorcast legalities;
+    private LegalitieApiLorcast legalities;
     private SetApiLorcast set;
-    private PricesApiLorcast prices;
+    private PriceApiLorcast prices;
 
     // Constructeur par défaut
     public CardApiLorcast() {
@@ -120,8 +120,8 @@ public class CardApiLorcast {
             ImageUrisApiLorcast imageUris, Long cost, Boolean inkwell, String ink, List<String> type,
             List<String> classifications, String text, List<String> keywords, Long moveCost, Long strength,
             Long willpower, Long lore, String rarity, List<String> illustrators, String collectorNumber,
-            String lang, String flavorText, Long tcgplayerId, LegalitiesApiLorcast legalities,
-            SetApiLorcast set, PricesApiLorcast prices) {
+            String lang, String flavorText, Long tcgplayerId, LegalitieApiLorcast legalities,
+            SetApiLorcast set, PriceApiLorcast prices) {
         this.cardIdBdd = cardIdBdd;
         this.cardIdApi = cardIdApi;
         this.name = name;
@@ -344,11 +344,11 @@ public class CardApiLorcast {
         this.tcgplayerId = tcgplayerId;
     }
 
-    public LegalitiesApiLorcast getLegalities() {
+    public LegalitieApiLorcast getLegalities() {
         return legalities;
     }
 
-    public void setLegalities(LegalitiesApiLorcast legalities) {
+    public void setLegalities(LegalitieApiLorcast legalities) {
         this.legalities = legalities;
     }
 
@@ -360,11 +360,11 @@ public class CardApiLorcast {
         this.set = set;
     }
 
-    public PricesApiLorcast getPrices() {
+    public PriceApiLorcast getPrices() {
         return prices;
     }
 
-    public void setPrices(PricesApiLorcast prices) {
+    public void setPrices(PriceApiLorcast prices) {
         this.prices = prices;
     }
 
