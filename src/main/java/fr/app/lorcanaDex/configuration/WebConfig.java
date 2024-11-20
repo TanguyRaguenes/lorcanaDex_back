@@ -28,7 +28,8 @@ public class WebConfig {
                 // corsConfiguration.addAllowedOrigin("http://localhost:4200");
                 corsConfiguration.setAllowedOrigins(Arrays.asList(
                                 "http://localhost:4200",
-                                "https://lorcanadexfront-production.up.railway.app"));
+                                "https://lorcanadexfront-production.up.railway.app",
+                                "https://www.lorcanadex.fr"));
 
                 corsConfiguration.setAllowedHeaders(Arrays.asList(
 
