@@ -41,7 +41,7 @@ public class CardsController {
 
         List<SetApiLorcast> sets = builder.build()
                 .get()
-                .uri(environment.getProperty("lorcastUrlGetSets"))
+                .uri(environment.getProperty("lorcast.Url.GetSets"))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<Map<String, List<SetApiLorcast>>>() {
                 })
@@ -52,7 +52,7 @@ public class CardsController {
 
             List<CardApiLorcast> setCards = builder.build()
                     .get()
-                    .uri(environment.getProperty("lorcastUrlGetCardsBySet"), set.getCode())
+                    .uri(environment.getProperty("lorcast.Url.GetCardsBySet"), set.getCode())
                     .retrieve()
                     .bodyToFlux(CardApiLorcast.class)
                     .collectList()
