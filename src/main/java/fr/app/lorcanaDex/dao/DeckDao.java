@@ -36,7 +36,7 @@ public class DeckDao implements IDeckDao {
                 try {
 
                     jdbcTemplate.update(
-                            "INSERT INTO deckDetails(deckId,cardId,quantity) VALUES (?,?,?)",
+                            "INSERT INTO deck_details(deckId,cardId,quantity) VALUES (?,?,?)",
                             deckId, cardId, quantity);
 
                 } catch (DataAccessException e) {
@@ -58,7 +58,7 @@ public class DeckDao implements IDeckDao {
 
         Map<Integer, Integer> cards = new HashMap<>();
 
-        jdbcTemplate.query("SELECT cardId, quantity FROM deckDetails WHERE deckId = ?",
+        jdbcTemplate.query("SELECT cardId, quantity FROM deck_details WHERE deckId = ?",
                 rs -> {
                     cards.put(rs.getInt("cardId"), rs.getInt("quantity"));
                 },
@@ -75,7 +75,7 @@ public class DeckDao implements IDeckDao {
 
         try {
 
-            jdbcTemplate.update("DELETE FROM deckDetails WHERE deckId = ?", deckId);
+            jdbcTemplate.update("DELETE FROM deck_details WHERE deckId = ?", deckId);
 
         } catch (DataAccessException e) {
             throw new RuntimeException("Error sql request deleteDeckCards : " + e.getMessage(), e);

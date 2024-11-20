@@ -132,7 +132,7 @@ public class CardsDao implements ICardsDao {
         jdbcTemplate.execute("TRUNCATE TABLE sets_api_lorcast");
         jdbcTemplate.execute("SET FOREIGN_KEY_CHECKS = 1");
 
-        String sql = "INSERT INTO sets_Api_Lorcast ("
+        String sql = "INSERT INTO sets_api_lorcast ("
                 + "setIdApi, name, code, releasedAt, prereleasedAt"
                 + ") VALUES (?, ?, ?, ?, ?)";
 
@@ -145,7 +145,7 @@ public class CardsDao implements ICardsDao {
                     set.getPrereleasedAt());
         }
 
-        sql = "INSERT INTO cards_Api_Lorcast ("
+        sql = "INSERT INTO cards_api_lorcast ("
                 + "cardIdApi, name, version, layout, releasedAt, "
                 + "imageSmallUrl, imageNormalUrl, imageLargeUrl, cost, inkwell, "
                 + "ink, type, classifications, text, keywords, "
