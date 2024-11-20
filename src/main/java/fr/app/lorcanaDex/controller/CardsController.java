@@ -62,15 +62,9 @@ public class CardsController {
 
         }
 
-        // for (CardApiLorcast card : allCards) {
-        // System.out.println(card.toString());
-        // System.out.println();
-        // System.out.println();
-        // }
-
         cardsManager.bulk(sets, cards);
 
-        response.put("Back response", "coucou");
+        response.put("Back response", "Bulk is a success !");
         return response;
 
         // String url = "https://api.lorcana-api.com/bulk/cards";
