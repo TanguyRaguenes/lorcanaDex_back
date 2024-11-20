@@ -1,6 +1,6 @@
 package fr.app.lorcanaDex.bo;
 
-public class LegalitiesApiLorcast {
+public class LegalitieApiLorcast {
 
     private String core;
 

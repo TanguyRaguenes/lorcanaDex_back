@@ -41,7 +41,8 @@ public class CardsController {
 
         List<SetApiLorcast> sets = builder.build()
                 .get()
-                .uri(environment.getProperty("lorcastUrlGetSets"))
+                .uri(environment.getProperty("lorcast.Url.GetSets"))
+                // .uri("https://api.lorcast.com/v0/sets")
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<Map<String, List<SetApiLorcast>>>() {
                 })
@@ -52,7 +53,8 @@ public class CardsController {
 
             List<CardApiLorcast> setCards = builder.build()
                     .get()
-                    .uri(environment.getProperty("lorcastUrlGetCardsBySet"), set.getCode())
+                    .uri(environment.getProperty("lorcast.Url.GetCardsBySet"), set.getCode())
+                    // .uri("https://api.lorcast.com/v0/sets/{code}/cards", set.getCode())
                     .retrieve()
                     .bodyToFlux(CardApiLorcast.class)
                     .collectList()
@@ -64,7 +66,7 @@ public class CardsController {
 
         cardsManager.bulk(sets, cards);
 
-        response.put("Back response", "Bulk is a success !");
+        response.put("Back response", "Bulk success");
         return response;
 
         // String url = "https://api.lorcana-api.com/bulk/cards";
@@ -94,17 +96,24 @@ public class CardsController {
         // });
     }
 
-    @GetMapping("/get")
-    public List<CardApiLorcast> get() {
-
-        return cardsManager.get();
-
-    }
-
-    @GetMapping("/get-cards")
-    public List<Card> getCards() {
+    @GetMapping("/getCards")
+    public List<CardApiLorcast> getCards() {
 
         return cardsManager.getCards();
 
     }
+
+    @GetMapping("/getSets")
+    public List<SetApiLorcast> getSets() {
+
+        return cardsManager.getSets();
+
+    }
+
+    // @GetMapping("/get-cards")
+    // public List<Card> getCardsa() {
+
+    // return cardsManager.getCards();
+
+    // }
 }

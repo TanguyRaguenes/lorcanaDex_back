@@ -43,7 +43,7 @@ public class RegistrationDao implements IRegistrationDao {
 
                 jdbcTemplate.update("INSERT INTO users(username,password,enabled) VALUES (?,?,1)", username,
                         bcryptPassword);
-                jdbcTemplate.update("INSERT INTO userDetails(username,illumineerName) VALUES (?,?)",
+                jdbcTemplate.update("INSERT INTO user_details(username,illumineerName) VALUES (?,?)",
                         username, illumineerName);
                 jdbcTemplate.update("INSERT INTO authorities(username,authority) VALUES (?,'ROLE_USER')",
                         username);

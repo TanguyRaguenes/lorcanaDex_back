@@ -2,18 +2,18 @@ package fr.app.lorcanaDex.bo;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
-public class PricesApiLorcast {
+public class PriceApiLorcast {
 
     private String usd;
 
     @JsonAlias("usd_foil")
     private String usdFoil;
 
-    public PricesApiLorcast() {
+    public PriceApiLorcast() {
 
     }
 
-    public PricesApiLorcast(String usd, String usdFoil) {
+    public PriceApiLorcast(String usd, String usdFoil) {
         this.usd = usd;
         this.usdFoil = usdFoil;
     }

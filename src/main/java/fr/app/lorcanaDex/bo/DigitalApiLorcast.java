@@ -6,10 +6,10 @@ public class DigitalApiLorcast {
     private String normal;
     private String large;
 
-    public void Digital() {
+    public DigitalApiLorcast() {
     }
 
-    public void Digital(String small, String normal, String large) {
+    public DigitalApiLorcast(String small, String normal, String large) {
         this.small = small;
         this.normal = normal;
         this.large = large;

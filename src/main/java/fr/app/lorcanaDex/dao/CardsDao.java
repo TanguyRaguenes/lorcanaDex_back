@@ -12,6 +12,10 @@ import org.springframework.stereotype.Repository;
 
 import fr.app.lorcanaDex.bo.Card;
 import fr.app.lorcanaDex.bo.CardApiLorcast;
+import fr.app.lorcanaDex.bo.DigitalApiLorcast;
+import fr.app.lorcanaDex.bo.ImageUrisApiLorcast;
+import fr.app.lorcanaDex.bo.LegalitieApiLorcast;
+import fr.app.lorcanaDex.bo.PriceApiLorcast;
 import fr.app.lorcanaDex.bo.SetApiLorcast;
 import fr.app.lorcanaDex.service.CloudinaryService;
 
@@ -110,15 +114,16 @@ public class CardsDao implements ICardsDao {
         return cards.isEmpty() ? null : cards.get(0);
     }
 
-    @Override
-    public List<Card> getCards() {
+    // @Override
+    // public List<Card> getCards() {
 
-        List<Card> cards = null;
+    // List<Card> cards = null;
 
-        cards = jdbcTemplate.query("SELECT * FROM cards", new BeanPropertyRowMapper<Card>(Card.class));
+    // cards = jdbcTemplate.query("SELECT * FROM cards", new
+    // BeanPropertyRowMapper<Card>(Card.class));
 
-        return cards;
-    }
+    // return cards;
+    // }
 
     @Override
     public void bulk(List<SetApiLorcast> sets, List<CardApiLorcast> cards) {
@@ -128,7 +133,7 @@ public class CardsDao implements ICardsDao {
         jdbcTemplate.execute("TRUNCATE TABLE sets_api_lorcast");
         jdbcTemplate.execute("SET FOREIGN_KEY_CHECKS = 1");
 
-        String sql = "INSERT INTO sets_Api_Lorcast ("
+        String sql = "INSERT INTO sets_api_lorcast ("
                 + "setIdApi, name, code, releasedAt, prereleasedAt"
                 + ") VALUES (?, ?, ?, ?, ?)";
 
@@ -141,7 +146,7 @@ public class CardsDao implements ICardsDao {
                     set.getPrereleasedAt());
         }
 
-        sql = "INSERT INTO cards_Api_Lorcast ("
+        sql = "INSERT INTO cards_api_lorcast ("
                 + "cardIdApi, name, version, layout, releasedAt, "
                 + "imageSmallUrl, imageNormalUrl, imageLargeUrl, cost, inkwell, "
                 + "ink, type, classifications, text, keywords, "
@@ -195,14 +200,91 @@ public class CardsDao implements ICardsDao {
     }
 
     @Override
-    public List<CardApiLorcast> get() {
+    public List<CardApiLorcast> getCards() {
 
-        List<CardApiLorcast> cards = new ArrayList<CardApiLorcast>();
+        List<CardApiLorcast> cards = jdbcTemplate.query("SELECT * FROM cards_api_lorcast", (rs, rowNum) -> {
 
-        cards = jdbcTemplate.query("SELECT * FROM cards_api_lorcast",
-                new BeanPropertyRowMapper<CardApiLorcast>(CardApiLorcast.class));
+            CardApiLorcast card = new CardApiLorcast();
+
+            // Champs simples
+            card.setCardIdBdd(rs.getLong("cardIdBdd"));
+            card.setCardIdApi(rs.getString("cardIdApi"));
+            card.setName(rs.getString("name"));
+            card.setVersion(rs.getString("version"));
+            card.setLayout(rs.getString("layout"));
+            card.setReleasedAt(rs.getDate("releasedAt"));
+
+            // Gestion des images
+            ImageUrisApiLorcast imageUris = new ImageUrisApiLorcast();
+            imageUris.setDigital(new DigitalApiLorcast(
+                    rs.getString("imageSmallUrl"),
+                    rs.getString("imageNormalUrl"),
+                    rs.getString("imageLargeUrl")));
+            card.setImageUris(imageUris);
+
+            card.setCost(rs.getObject("cost", Long.class)); // Gestion de nullabilité
+            card.setInkwell(rs.getBoolean("inkwell"));
+            card.setInk(rs.getString("ink"));
+
+            // Gestion des listes avec vérification de null
+            String typeString = rs.getString("type");
+            card.setType(typeString != null ? List.of(typeString.split(",")) : null);
+
+            String classificationsString = rs.getString("classifications");
+            card.setClassifications(classificationsString != null ? List.of(classificationsString.split(",")) : null);
+
+            String keywordsString = rs.getString("keywords");
+            card.setKeywords(keywordsString != null ? List.of(keywordsString.split(",")) : null);
+
+            String illustratorsString = rs.getString("illustrators");
+            card.setIllustrators(illustratorsString != null ? List.of(illustratorsString.split(",")) : null);
+
+            // Champs numériques avec gestion de null
+            card.setMoveCost(rs.getObject("moveCost", Long.class));
+            card.setStrength(rs.getObject("strength", Long.class));
+            card.setWillpower(rs.getObject("willpower", Long.class));
+            card.setLore(rs.getObject("lore", Long.class));
+            card.setRarity(rs.getString("rarity"));
+            card.setCollectorNumber(rs.getString("collectorNumber"));
+            card.setLang(rs.getString("lang"));
+            card.setFlavorText(rs.getString("flavorText"));
+
+            card.setTcgplayerId(rs.getObject("tcgplayerId", Long.class));
+
+            // Mapping des legalities
+            LegalitieApiLorcast legalities = new LegalitieApiLorcast();
+            legalities.setCore(rs.getString("legalityCore"));
+            card.setLegalities(legalities);
+
+            // Mapping du set
+            SetApiLorcast set = new SetApiLorcast();
+            set.setSetIdApi(rs.getString("setIdApi"));
+            set.setName(rs.getString("setName"));
+            set.setCode(rs.getString("setCode"));
+            card.setSet(set);
+
+            // Mapping des prices
+            PriceApiLorcast prices = new PriceApiLorcast();
+            prices.setUsd(rs.getString("pricesUsd"));
+            prices.setUsdFoil(rs.getString("pricesUsdFoil"));
+            card.setPrices(prices);
+
+            return card;
+        });
 
         return cards;
+    }
+
+    @Override
+    public List<SetApiLorcast> getSets() {
+
+        List<SetApiLorcast> sets = null;
+
+        sets = jdbcTemplate.query("SELECT * FROM sets_api_lorcast",
+                new BeanPropertyRowMapper<SetApiLorcast>(SetApiLorcast.class));
+
+        return sets;
+
     }
 
 }

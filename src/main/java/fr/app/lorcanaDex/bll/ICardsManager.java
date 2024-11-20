@@ -12,8 +12,10 @@ public interface ICardsManager {
 
     public abstract void bulkData(List<Card> cards);
 
-    public abstract List<CardApiLorcast> get();
+    public abstract List<CardApiLorcast> getCards();
 
-    public abstract List<Card> getCards();
+    public abstract List<SetApiLorcast> getSets();
+
+    // public abstract List<Card> getCards();
 
 }
