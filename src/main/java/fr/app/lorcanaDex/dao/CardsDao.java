@@ -213,6 +213,7 @@ public class CardsDao implements ICardsDao {
             card.setVersion(rs.getString("version"));
             card.setLayout(rs.getString("layout"));
             card.setReleasedAt(rs.getDate("releasedAt"));
+            card.setText(rs.getString("text"));
 
             // Gestion des images
             ImageUrisApiLorcast imageUris = new ImageUrisApiLorcast();
